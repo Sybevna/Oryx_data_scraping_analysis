@@ -5,6 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
+from utils.preprocessing import cleanup
+
 #%% Open browser and navigate to page to retrieve data from
 url = (
     "https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-equipment.html"
@@ -20,63 +22,18 @@ soup = BeautifulSoup(html)
 #     if len(str(Tags[i].contents[0])) > 1: # Get rid of the empty lines
 #         Y.append(str(Tags[i].contents[0]))
 
-Data = []
-# Names = []
-df = pd.DataFrame()
-Tags2 = soup.find_all(
+
+# Retrive all content of h3 tags- where data of interest is stored
+#%% Cleanup data - to be put in separate file
+#%% Remove all the HTML characters and things we don't need
+#%% Split all elements into different str
+
+tags2 = soup.find_all(
     "h3"
 )  # Retrive all content of h3 tags- where data of interest is stored
-for j in range(len(Tags2)):
-    # print(str(Tags2[j].contents))
-    if len(str(Tags2[j].contents[0])) > 1:
-        Data.append(str(Tags2[j].contents))  # Dump everything into Data array
-        # Names.append(str(Tags2[j].contents[0]))
+data = [x.text for x in tags2 if len(x.text) > 1]
+data = [cleanup(x) for x in data]
 
-#%% Cleanup data - to be put in separate file
-def cleanup(X):
-    for i in range(len(X)):
-        if chr(34) in X[i]:
-            X[i] = X[i].replace('"', "")
-        if "'" in X[i]:
-            X[i] = X[i].replace("'", "")
-        if "class=mw-headline id=Pistols>" in X[i]:
-            X[i] = X[i].replace("class=mw-headline id=Pistols>", "")
-        if "</span>," in X[i]:
-            X[i] = X[i].replace("</span>,", "")
-        if "style=color: red;>" in X[i]:
-            X[i] = X[i].replace("style=color: red;>", "")
-        if "<br/></span>" in X[i]:
-            X[i] = X[i].replace("<br/></span>", "")
-        if "-" in X[i]:
-            X[i] = X[i].replace("-", "")
-        if ":" in X[i]:
-            X[i] = X[i].replace(":", "")
-        if "," in X[i]:
-            X[i] = X[i].replace(",", "")
-        if "of which" in X[i]:
-            X[i] = X[i].replace("of which", "")
-        if "(" in X[i]:
-            X[i] = X[i].replace("(", "")
-        if ")" in X[i]:
-            X[i] = X[i].replace(")", "")
-        if "<br/>" in X[i]:
-            X[i] = X[i].replace("<br/>", "")
-        if "[" in X[i]:
-            X[i] = X[i].replace("[", "")
-        if "]" in X[i]:
-            X[i] = X[i].replace("]", "")
-        if "<span" in X[i]:
-            X[i] = X[i].replace("<span", "")
-        if "</span>" in X[i]:
-            X[i] = X[i].replace("</span>", "")
-    return X
-
-
-#%% Remove all the HTML characters and things we don't need
-cleanup(Data)
-#%% Split all elements into different str
-for i in range(len(Data)):
-    Data[i] = Data[i].split()
 #%% Put all rows in same format
 # This handles cases where all the categories are not all present, or 2 are present, or 3 etc...
 # The idea is to standardise the format of the data to put everything in DF after
