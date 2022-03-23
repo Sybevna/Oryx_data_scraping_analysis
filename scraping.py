@@ -198,11 +198,19 @@ df_ua.Captured=pd.to_numeric(df_ua.Captured)
 #%% Get rid of columns with same words - tidy up
 df_ru =df_ru.drop(labels = ["des", "dam","aba","capt"],axis = 1)       
 df_ua =df_ua.drop(labels = ["des", "dam","aba","capt"],axis = 1)
+#%% Create paths to save figs
+path_ru = os.path.join(os.getcwd(), 'Russia')
+if not os.path.exists('Russia'):
+    os.makedirs('Russia')
+
+path_ua = os.path.join(os.getcwd(), 'Ukraine')
+if not os.path.exists('Ukraine'):
+    os.makedirs('Ukraine')
 #%% Plotting section
-ax = df_ru.iloc[1:].plot.bar(x = 'Vehicle Type', stacked=True, title = "Russia", grid  =True) # bar chart RU
-ax.figure.savefig('stacked_chart_Russia.png',bbox_inches="tight", dpi = 600 )
-ax1 = df_ua.iloc[1:].plot.bar(x = 'Vehicle Type', stacked=True, title = "Ukraine", grid  =True) # bar chart UA
-ax1.figure.savefig('stacked_chart_Ukraine.png',bbox_inches="tight", dpi = 600 )
+ax = df_ru.iloc[1:].plot.bar(x = 'Vehicle Type',y = ["Destroyed","Damaged","Abandoned","Captured"],  stacked=True, title = "Russia", grid  =True) # bar chart RU
+ax.figure.savefig(os.path.join(path_ru,'stacked_chart_Russia.png'),bbox_inches="tight", dpi = 600 )
+ax1 = df_ua.iloc[1:].plot.bar(x = 'Vehicle Type',y = ["Destroyed","Damaged","Abandoned","Captured"], stacked=True, title = "Ukraine", grid  =True) # bar chart UA
+ax1.figure.savefig(os.path.join(path_ua,'stacked_chart_Ukraine.png'),bbox_inches="tight", dpi = 600 )
 
 #%% Russian/Ukrainian summary - subplot
 fig1, (ax2, ax3) = plt.subplots(nrows=2, ncols=1) # two axes on figure
@@ -219,7 +227,7 @@ ax3.pie(Tasks_ua,labels=my_labels,autopct='%1.1f%%')
 ax3.set_title("Ukrainian losses")
 ax3.axis('equal')
 #ax3.show()
-fig1.savefig('Pie_chart_RU_UA.png',bbox_inches="tight", dpi = 600 )
+fig1.savefig(os.path.join(path_ru,'Pie_chart_RU_UA.png'),bbox_inches="tight", dpi = 600 )
 
 fig1, ax1 = plt.subplots()
 Tasks = df_ru.loc[0].loc[["Destroyed","Damaged","Abandoned","Captured"]]
@@ -227,7 +235,7 @@ my_labels = ["Destroyed","Damaged","Abandoned","Captured"]
 ax1.pie(Tasks,labels=my_labels,autopct='%1.1f%%')
 ax1.set_title("Russian losses")
 ax1.axis('equal')
-fig1.savefig('Pie_chart_RU.png',bbox_inches="tight", dpi = 600 )
+fig1.savefig(os.path.join(path_ru,'Pie_chart_RU.png'),bbox_inches="tight", dpi = 600 )
 #ax2.plt.show()
 
 fig1, ax1 = plt.subplots()
@@ -236,33 +244,29 @@ my_labels = ["Destroyed","Damaged","Abandoned","Captured"]
 ax1.pie(Tasks,labels=my_labels,autopct='%1.1f%%')
 ax1.set_title("Ukrainian losses")
 ax1.axis('equal')
-fig1.savefig('Pie_chart_UA.png',bbox_inches="tight", dpi = 600 )
+fig1.savefig(os.path.join(path_ua,'Pie_chart_UA.png'),bbox_inches="tight", dpi = 600 )
 #ax2.plt.show()
 #%% Russian losses per vehicle type
-path_ru = os.path.join(os.getcwd(), 'Russia')
-if not os.path.exists('Russia'):
-    os.makedirs('Russia')
 
 for i in range(1,len(df_ru)):
     fig1, ax1 = plt.subplots()
     Tasks = df_ru.loc[i].loc[["Destroyed","Damaged","Abandoned","Captured"]]
     my_labels = ["Destroyed","Damaged","Abandoned","Captured"]
     ax1.pie(Tasks,labels=my_labels,autopct='%1.1f%%')
-    ax1.set_title(df_ru.loc[i].loc["Vehicle Type"])
+    ax1.set_title(df_ru.loc[i].loc["Vehicle Type"] + " - Russia")
     ax1.axis('equal')
     #plt.show()
     fig1.savefig(os.path.join(path_ru, 'Pie_chart_RU_'+df_ru.loc[i].loc["Vehicle Type"]+'.png'),bbox_inches="tight", dpi = 600 )
     
-path_ua = os.path.join(os.getcwd(), 'Ukraine')
-if not os.path.exists('Ukraine'):
-    os.makedirs('Ukraine')
-    
+
 for i in range(1,len(df_ua)):
     fig1, ax1 = plt.subplots()
     Tasks = df_ua.loc[i].loc[["Destroyed","Damaged","Abandoned","Captured"]]
     my_labels = ["Destroyed","Damaged","Abandoned","Captured"]
     ax1.pie(Tasks,labels=my_labels,autopct='%1.1f%%')
-    ax1.set_title(df_ua.loc[i].loc["Vehicle Type"])
+    ax1.set_title(df_ua.loc[i].loc["Vehicle Type"] + " - Ukraine")
     ax1.axis('equal')
     #plt.show()
     fig1.savefig(os.path.join(path_ua, 'Pie_chart_UA_'+df_ua.loc[i].loc["Vehicle Type"]+'.png'),bbox_inches="tight", dpi = 600 )
+    
+#%% 
