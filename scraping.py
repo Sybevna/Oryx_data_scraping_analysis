@@ -253,7 +253,7 @@ for i in range(1,len(df_ru)):
     Tasks = df_ru.loc[i].loc[["Destroyed","Damaged","Abandoned","Captured"]]
     my_labels = ["Destroyed","Damaged","Abandoned","Captured"]
     ax1.pie(Tasks,labels=my_labels,autopct='%1.1f%%')
-    ax1.set_title(df_ru.loc[i].loc["Vehicle Type"] + " - Russia")
+    ax1.set_title(df_ru.loc[i].loc["Vehicle Type"] +" (Total: "+ str(df_ru.loc[i].loc["Total"]) +") - Russia")
     ax1.axis('equal')
     #plt.show()
     fig1.savefig(os.path.join(path_ru, 'Pie_chart_RU_'+df_ru.loc[i].loc["Vehicle Type"]+'.png'),bbox_inches="tight", dpi = 600 )
@@ -264,7 +264,7 @@ for i in range(1,len(df_ua)):
     Tasks = df_ua.loc[i].loc[["Destroyed","Damaged","Abandoned","Captured"]]
     my_labels = ["Destroyed","Damaged","Abandoned","Captured"]
     ax1.pie(Tasks,labels=my_labels,autopct='%1.1f%%')
-    ax1.set_title(df_ua.loc[i].loc["Vehicle Type"] + " - Ukraine")
+    ax1.set_title(df_ua.loc[i].loc["Vehicle Type"] +" (Total: "+ str(df_ua.loc[i].loc["Total"]) +") - Russia")
     ax1.axis('equal')
     #plt.show()
     fig1.savefig(os.path.join(path_ua, 'Pie_chart_UA_'+df_ua.loc[i].loc["Vehicle Type"]+'.png'),bbox_inches="tight", dpi = 600 )
