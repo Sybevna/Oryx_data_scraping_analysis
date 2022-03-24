@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
-
 from utils.preprocessing import cleanup
+import numpy as np
 
 #%% Open browser and navigate to page to retrieve data from
 url = (
@@ -31,8 +31,8 @@ soup = BeautifulSoup(html)
 tags2 = soup.find_all(
     "h3"
 )  # Retrive all content of h3 tags- where data of interest is stored
-data = [x.text for x in tags2 if len(x.text) > 1]
-data = [cleanup(x) for x in data]
+Data = [x.text for x in tags2 if len(x.text) > 1]
+Data = [cleanup(x) for x in Data]
 
 #%% Put all rows in same format
 # This handles cases where all the categories are not all present, or 2 are present, or 3 etc...
@@ -295,6 +295,8 @@ df_ua.Damaged = pd.to_numeric(df_ua.Damaged)
 df_ua.Abandoned = pd.to_numeric(df_ua.Abandoned)
 df_ua.Captured = pd.to_numeric(df_ua.Captured)
 
+# df_ua.replace(0, np.nan, inplace=True)
+# df_ru.replace(0, np.nan, inplace=True)
 #%% Get rid of columns with same words - tidy up
 df_ru = df_ru.drop(labels=["des", "dam", "aba", "capt"], axis=1)
 df_ua = df_ua.drop(labels=["des", "dam", "aba", "capt"], axis=1)
@@ -366,9 +368,14 @@ fig1.savefig(os.path.join(path_ua, "Pie_chart_UA.png"), bbox_inches="tight", dpi
 
 for i in range(1, len(df_ru)):
     fig1, ax1 = plt.subplots()
-    Tasks = df_ru.loc[i].loc[["Destroyed", "Damaged", "Abandoned", "Captured"]]
-    my_labels = ["Destroyed", "Damaged", "Abandoned", "Captured"]
-    ax1.pie(Tasks, labels=my_labels, autopct="%1.1f%%")
+    m2 = (df_ru.iloc[[i]] != 0).any()
+    m1 = df_ru.columns[m2][2:]
+    # Tasks = df_ru.loc[i].loc[["Destroyed", "Damaged", "Abandoned", "Captured"]]
+    Tasks = df_ru.loc[i].loc[m1]
+    # my_labels = ["Destroyed", "Damaged", "Abandoned", "Captured"]
+    ax1.pie(
+        Tasks, labels=m1, autopct=lambda p: "{:.1f}%".format(round(p)) if p > 0 else ""
+    )
     ax1.set_title(
         df_ru.loc[i].loc["Vehicle Type"]
         + " (Total: "
@@ -388,14 +395,20 @@ for i in range(1, len(df_ru)):
 
 for i in range(1, len(df_ua)):
     fig1, ax1 = plt.subplots()
-    Tasks = df_ua.loc[i].loc[["Destroyed", "Damaged", "Abandoned", "Captured"]]
+    # Tasks = df_ua.loc[i].loc[["Destroyed", "Damaged", "Abandoned", "Captured"]]
+    m2 = (df_ru.iloc[[i]] != 0).any()
+    m1 = df_ru.columns[m2][2:]
+    # Tasks = df_ru.loc[i].loc[["Destroyed", "Damaged", "Abandoned", "Captured"]]
+    Tasks = df_ru.loc[i].loc[m1]
     my_labels = ["Destroyed", "Damaged", "Abandoned", "Captured"]
-    ax1.pie(Tasks, labels=my_labels, autopct="%1.1f%%")
+    ax1.pie(
+        Tasks, labels=m1, autopct=lambda p: "{:.1f}%".format(round(p)) if p > 0 else ""
+    )
     ax1.set_title(
         df_ua.loc[i].loc["Vehicle Type"]
         + " (Total: "
         + str(df_ua.loc[i].loc["Total"])
-        + ") - Russia"
+        + ") - Ukraine"
     )
     ax1.axis("equal")
     # plt.show()
