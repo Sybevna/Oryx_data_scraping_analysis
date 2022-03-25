@@ -1,4 +1,4 @@
-from gc import garbage
+import pandas as pd
 
 
 def cleanup(sentence):
