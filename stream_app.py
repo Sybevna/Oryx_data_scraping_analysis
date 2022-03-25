@@ -71,12 +71,13 @@ def disp_buttons(df):
     
 st.subheader("Generate a specific graph:", anchor=None)
  
-if st.button("Russia", key= "russia"):
+option = st.selectbox("Country ",("Russia","Ukraine"))
+if option == "Russia":
+    disp_buttons(df_ru)
+else:
     disp_buttons(df_ru)
     #button_RU.empty()
     
  
-if st.button("Ukraine", key = "ukraine"):
-    disp_buttons(df_ua)
-    #button_UA.empty()
+
     
