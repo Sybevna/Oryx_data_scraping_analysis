@@ -40,34 +40,14 @@ path_ua = os.path.join(os.getcwd(), "Ukraine")
 if not os.path.exists("Ukraine"):
     os.makedirs("Ukraine")
 #%% Stacked bar chart per vehicle
-ax = (
-    df_ru.sort_values(by="Total", ascending=False)
-    .iloc[1:]
-    .plot.bar(
-        x="Vehicle Type",
-        y=["Destroyed", "Damaged", "Abandoned", "Captured"],
-        stacked=True,
-        title="Russia",
-        grid=True,
-    )
-)  # bar chart RU
-ax.figure.savefig(
-    os.path.join(path_ru, "stacked_chart_Russia.png"), bbox_inches="tight", dpi=600
-)
-ax1 = (
-    df_ua.sort_values(by="Total", ascending=False)
-    .iloc[1:]
-    .plot.bar(
-        x="Vehicle Type",
-        y=["Destroyed", "Damaged", "Abandoned", "Captured"],
-        stacked=True,
-        title="Ukraine",
-        grid=True,
-    )
-)  # bar chart UA
-ax1.figure.savefig(
-    os.path.join(path_ua, "stacked_chart_Ukraine.png"), bbox_inches="tight", dpi=600
-)
+
+
+df_ru.sort_values(by=["total"], ascending=False).iloc[1:].drop(columns=["total"]).plot(
+    kind="bar", stacked=True, title="Stack"
+).figure.savefig("Russia/stacked_chart_Russia.jpg", bbox_inches="tight")
+df_ua.sort_values(by=["total"], ascending=False).iloc[1:].drop(columns=["total"]).plot(
+    kind="bar", stacked=True, title="Stack"
+).figure.savefig("Ukraine/stacked_chart_Ukraine.jpg", bbox_inches="tight")
 
 #%% Russian/Ukrainian summary - subplot
 fig1, (ax2, ax3) = plt.subplots(nrows=2, ncols=1)  # two axes on figure
