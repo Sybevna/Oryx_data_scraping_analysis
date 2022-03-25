@@ -1,27 +1,27 @@
-Vehicle Type,Total,Destroyed,Damaged,Abandoned,Captured
-Russia,1785,871,34,228,652
-Tanks,280,117,4,41,118
-Armoured Fighting Vehicles,198,87,0,34,77
-Infantry Fighting Vehicles,265,136,2,31,93
-Armoured Personnel Carriers,71,18,0,15,38
+,Total,Destroyed,Damaged,Abandoned,Captured
+Russia,1847,910,35,228,674
+Tanks,289,122,4,41,122
+Armoured Fighting Vehicles,210,95,0,34,81
+Infantry Fighting Vehicles,282,148,2,29,100
+Armoured Personnel Carriers,76,19,0,17,40
 MineResistant Ambush Protected MRAP Vehicles,12,4,0,3,5
-Infantry Mobility Vehicles,59,32,2,5,18
+Infantry Mobility Vehicles,63,35,2,5,19
 Communications Stations,11,3,0,4,4
-Engineering Vehicles,47,14,0,8,25
+Engineering Vehicles And Equipment,52,18,0,8,26
 AntiTank Guided Missiles,62,0,0,24,38
 ManPortable Air Defence Systems,24,0,0,0,24
 Heavy Mortars,5,0,0,0,5
 Towed Artillery,41,8,2,5,26
-SelfPropelled Artillery,52,12,2,15,22
+SelfPropelled Artillery,54,14,2,15,22
 Multiple Rocket Launchers,33,15,0,5,14
 AntiAircraft Guns,2,0,0,0,2
 SelfPropelled AntiAircraft Guns,9,5,0,3,1
 SurfaceToAir Missile Systems,40,20,1,7,12
 Radars,2,1,0,0,1
 Jammers And Deception Systems,6,2,2,0,2
-Aircraft,15,14,1,0,0
+Aircraft,16,15,1,0,0
 Helicopters,35,30,3,2,0
 Unmanned Aerial Vehicles,16,11,0,0,5
 Naval Ships,3,1,2,0,0
 Logistics Trains,2,2,0,0,0
-Trucks Vehicles and Jeeps,580,337,15,59,168
+Trucks Vehicles and Jeeps,597,341,16,59,170
