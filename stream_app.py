@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 path_ru = os.path.join(os.getcwd(), "Russia")
 path_ua = os.path.join(os.getcwd(), "Ukraine")
 #%% Import dataframes
-df_ru = pd.read_csv('df_ru.csv')
-df_ua = pd.read_csv('df_ru.csv')
+df_ru = pd.read_csv('df_ru.csv',index_col = 0)
+df_ua = pd.read_csv('df_ru.csv',index_col = 0)
 #%%
 st.title('Attack On Europe: Documenting Equipment Losses During The 2022 Russian Invasion Of Ukraine')
 
@@ -37,32 +37,33 @@ for idx, filteredImage in enumerate(filteredImages):
     next(cols).image(filteredImage, width=335, caption=caption[idx])
     
 def pie_maker(df):
-     fig1, ax1 = plt.subplots(1,1,figsize=(10,4))
-     m2 = (df != 0).any()
-     m1 = df.columns[m2][2:]
+     fig1, ax1 = plt.subplots()
+     m2 = (df != 0)
+     m1 = df[m2][1:].index
      # Tasks = df_ru.loc[i].loc[["Destroyed", "Damaged", "Abandoned", "Captured"]]
      Tasks = df.loc[m1]
      # my_labels = ["Destroyed", "Damaged", "Abandoned", "Captured"]
      ax1.pie(
          Tasks, labels=m1, autopct=lambda p: "{:.1f}%".format(round(p)) if p > 0 else ""
      )
-     ax1.set_title(
-         df.loc["Vehicle Type"]
-         + " (Total: "
-         + str(df_ru.loc["Total"])
-         + ")"
-     )
+     #ax1.set_title(
+         #df.index
+        # + " (Total: "
+         #+ str(df.loc["Total"])
+         #+ ") - Russia"
+    # )
      ax1.axis("equal")
-     st.pyplot(fig = fig1, clear_figure  = False)
-     
+     st.pyplot(fig = fig1)
+      
      
 def disp_buttons(df):
     for i in range(1, len(df)):
         #st.button(df.loc[i].loc["Vehicle Type"], key=i, help=None )   
-        if st.button(df.loc[i].loc["Vehicle Type"], key=i, help=None ):
-           pie_maker(df.loc[i])
-           st.subheader("TEST", anchor=None)
-    return df
+        if st.button(df.index[i], key=i, help=None):
+            pie_maker(df.iloc[i])
+           #pie_maker(df.iloc[i])
+           
+           #st.subheader("TEST", anchor=None)
             
            # clicked.empty()
             
@@ -70,12 +71,13 @@ def disp_buttons(df):
     
 st.subheader("Generate a specific graph:", anchor=None)
  
-if st.button("Russia"):
+option = st.selectbox("Country ",("Russia","Ukraine"))
+if option == "Russia":
+    disp_buttons(df_ru)
+else:
     disp_buttons(df_ru)
     #button_RU.empty()
     
  
-if st.button("Ukraine"):
-    disp_buttons(df_ua)
-    #button_UA.empty()
+
     
