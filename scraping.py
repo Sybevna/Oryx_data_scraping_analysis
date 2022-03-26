@@ -68,7 +68,7 @@ Tasks_ua = df_ua.iloc[0].loc[["Destroyed", "Damaged", "Abandoned", "Captured"]]
 my_labels = ["Destroyed", "Damaged", "Abandoned", "Captured"]
 ax3.pie(Tasks_ua, labels=my_labels, autopct="%1.1f%%", textprops={"fontsize": 7})
 ax3.set_title(
-    df_ru.index[0]
+    df_ua.index[0]
     + " (Total: "
     + str(df_ua.iloc[0]["Total"])
     + ") "
