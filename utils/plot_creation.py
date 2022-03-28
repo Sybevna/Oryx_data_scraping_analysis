@@ -20,14 +20,14 @@ def summary(data):
     return plt
 
 
-def pie_plot(data, country, equipement):
+def pie_plot(data, country, equipment):
     DATA = data[country].drop(columns=["Total"]).T
 
     fig = go.Figure(
         go.Pie(
-            values=DATA[equipement].values,
-            labels=DATA[equipement].index.values,
-            title=f"{equipement} (total: {data[country].loc[equipement].Total}) - {country}",
+            values=DATA[equipment].values,
+            labels=DATA[equipment].index.values,
+            title=f"{equipment} (total: {data[country].loc[equipment].Total}) - {country}",
         )
     )
     return fig

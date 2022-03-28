@@ -39,7 +39,7 @@ def create_dfs(data):
                 "abandoned": "Abandoned",
                 "captured": "Captured",
             },
-            index={x: "All equipements"},
+            index={x: "All equipments"},
         )  # Turn into DFs
 
     return final

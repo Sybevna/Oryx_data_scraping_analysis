@@ -11,7 +11,7 @@ def main():
     #%% datetime object containing current date and time
     now = datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-    str_date = "scrapping done at: " + dt_string
+    str_date = "scraping done at: " + dt_string
     #%% Call scraping function
     data = scrap()
     #%%
@@ -27,10 +27,10 @@ def main():
     col1, col2 = st.columns(2)
 
     with col1:
-        st.pyplot(summary_type(data, "Russia"))
+        st.pyplot(fig = summary_type(data, "Russia"))
 
     with col2:
-        st.pyplot(summary_type(data, "Ukraine"))
+        st.pyplot(fig = summary_type(data, "Ukraine"))
     return data
 
 
@@ -40,15 +40,15 @@ def following(data):
     with col3:
         country = st.selectbox("Country", ("Russia", "Ukraine"))
     with col4:
-        equipement = st.selectbox("Type", data[country].iloc[1:].index.values)
-    return [country, equipement]
+        equipment = st.selectbox("Type", data[country].iloc[1:].index.values)
+    return [country, equipment]
 
 
-def specific(data, country, equipement):
-    st.write(pie_plot(data, country=country, equipement=equipement))
+def specific(data, country, equipment):
+    st.write(pie_plot(data, country=country, equipment=equipment))
 
 
 if __name__ == "__main__":
     data = main()
-    country, equipement = following(data)
-    specific(data, country, equipement)
+    country, equipment = following(data)
+    specific(data, country, equipment)
