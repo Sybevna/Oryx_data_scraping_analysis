@@ -5,7 +5,7 @@ from datetime import datetime
 
 from utils.plot_creation import summary, pie_plot, summary_type
 from utils.scraping import scrap
-
+import click
 
 def main():
     #%% datetime object containing current date and time
