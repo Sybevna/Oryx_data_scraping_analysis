@@ -5,13 +5,13 @@ from datetime import datetime
 
 from utils.plot_creation import summary, pie_plot, summary_type
 from utils.scraping import scrap
-import click
+
 
 def main():
     #%% datetime object containing current date and time
     now = datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-    str_date = "scraping done at: " + dt_string
+    str_date = "scraping done at: " + dt_string + "(GMT)"
     #%% Call scraping function
     data = scrap()
     #%%
