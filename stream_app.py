@@ -47,8 +47,8 @@ def following(data):
 def specific(data, country, equipment):
     st.write(pie_plot(data, country=country, equipment=equipment))
 
+if __name__ == "__main__":
 
-
-data = main()
-country, equipment = following(data)
-specific(data, country, equipment)
+    data = main()
+    country, equipment = following(data)
+    specific(data, country, equipment)
